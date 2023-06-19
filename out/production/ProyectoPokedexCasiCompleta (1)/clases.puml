@@ -1,0 +1,112 @@
+@startuml
+
+
+Abstract Class Pokemon{
+-id: int
+-name: String
+-firstType: String
+-secondType: String
++Pokemon(id:int, name:String, firstType:String, secondType:String)
++ getters and setters
+}
+
+Class BasicStagePokemon{
+-firstEvo: Pokemon
+-secondEvo: Pokemon
+-thirdEvo: Pokemon
++BasicPokemon(firstEvo:Pokemon, secondEvo:Pokemon, thirdEvo:Pokemon)
++BasicPokemon(firstEvo:Pokemon, secondEvo:Pokemon)
++BasicPokemon(firstEvo:Pokemon)
++getters
+}
+
+Class SecondStagePokemon{
+-previousEvo: Pokemon
+-secondEvo: Pokemon
++FirstEvoPokemon(previousEvo:Pokemon, secondEvo:Pokemon)
++FirstEvoPokemon(previousEvo:Pokemon)
+getters
+}
+
+Class ThirdStagePokemon{
+-previousFirsEvo: Pokemon
+-previousSecondEvo: Pokemon
++SecondEvoPokemon(previousFirstEvo:Pokemon, previousSecondEvo:Pokemon)
+getters
+}
+
+Class DoubleNode{
+-pokemon: Pokemon
+-previous:DoubleNode
+-next:DoubleNode
++DoubleNode(pokemon: Pokemon)
++getters and setters
+}
+
+Class DoubleNexList{
+-head: DoubleNode
+-tail: DoubleNode
++DoubleNexList()
+}
+
+
+Interface List{
+compararCon(p:Pokemon) int
+isIgual(p:Pokemon) boolean
+}
+
+
+Interface Colection{
+agregar(p:Pokemon) boolean
+eliminar(p:Pokemon) boolean
+cantidad(p:Pokemon) int
+isVacia(p:Pokemon) boolean
+}
+
+
+
+
+Class PokedexDataManager{
+- pokemonData DoubleNexList;
+- idsOrderList ArrayList<Pokemon>;
+- namesOrderList ArrayList<Pokemon>;
++ PokedexDataManager()
++ menuOptionThree() void
++ menuOptionOne() void
++ seePokemonRange(int min, int max) void
++ seePokedexAlphabetic() void
++ getPokemonListForType(String type) void
++ loadPokedexData () DoubleNexList
++ getPokemonData() DoubleNexList
++ orderPokemonList(DoubleNexList pokemonData) ArrayList<Pokemon>
++ alphabeticOrderPokemonList(DoubleNexList pokemonData) ArrayList<Pokemon>
++ personalizedSearch() void
++ searchById(int idPokemon) void
++ searchByName(String nombrePokemon) void
+}
+
+Class Main{
+-currentAmount int
+-maxAmount: int
+-pokemonArray: Pokemon[]
++PokemonList(maxAmount:int)
+}
+
+
+Pokemon <|.. BasicStagePokemon
+Pokemon <|.. SecondStagePokemon
+Pokemon <|.. ThirdStagePokemon
+
+DoubleNexList ..|> List: implements
+DoubleNexList --> "0..1"DoubleNode: -tail: Node
+DoubleNexList --> "0..1"DoubleNode: -head: Node
+DoubleNode --> "0..1"DoubleNode: -next: Node
+DoubleNode -- "0..1"DoubleNode: -previous: Node
+List --|> Colection: extends
+DoubleNode --> Pokemon
+Colection --> Pokemon
+PokedexDataManager --> DoubleNexList
+Main --> PokedexDataManager
+
+
+@enduml
